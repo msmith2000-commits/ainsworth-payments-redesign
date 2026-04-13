@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ainsworth Payments — High-Risk Merchant Processing, Simplified</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f2b5b;--navy-dark:#091d3e;--navy-light:#1a3f7a;--blue:#2563eb;--blue-light:#3b82f6;--sky:#dbeafe;--green:#16a34a;--green-light:#22c55e;--white:#fff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-800:#1e293b;--gray-900:#0f172a;--red:#dc2626;--orange:#f59e0b;--qr-green:#2BC000}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--gray-800);line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{max-width:1140px;margin:0 auto;padding:0 2rem}
+img{max-width:100%}
+
+/* ─── NAV ─── */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-brand img{height:50px}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:.92rem;color:var(--gray-600);text-decoration:none;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--navy)}
+.nav-cta{background:var(--navy);color:var(--white) !important;padding:.6rem 1.5rem;border-radius:8px;font-weight:600;font-size:.9rem;transition:all .2s}
+.nav-cta:hover{background:var(--navy-light);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,43,91,.3)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s}
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--white);flex-direction:column;padding:1.5rem 2rem;border-bottom:1px solid var(--gray-200);box-shadow:0 8px 24px rgba(0,0,0,.08);gap:1rem;align-items:flex-start}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(155deg,var(--navy-dark) 0%,var(--navy) 40%,var(--navy-light) 100%);color:var(--white);padding:5rem 2rem 4.5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;right:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-20%;left:-5%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(43,192,0,.08) 0%,transparent 70%);pointer-events:none}
+.hero .container{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
+@media(max-width:900px){.hero .container{grid-template-columns:1fr;text-align:center}}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:.4rem 1rem;border-radius:50px;font-size:.75rem;font-weight:600;color:var(--sky);margin-bottom:1.5rem;letter-spacing:.02em}
+.hero-badge .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--qr-green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;line-height:1.12;margin-bottom:1.5rem}
+.hero h1 em{font-style:normal;color:var(--blue-light)}
+.hero-sub{font-size:1.05rem;color:var(--gray-300);max-width:520px;margin-bottom:2.5rem;line-height:1.75;font-weight:300}
+@media(max-width:900px){.hero-sub{margin:0 auto 2.5rem}}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+@media(max-width:900px){.hero-ctas{justify-content:center}}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.75rem;border-radius:8px;font-family:'Inter',sans-serif;font-size:.92rem;font-weight:600;text-decoration:none;transition:all .25s;cursor:pointer;border:none}
+.btn-blue{background:var(--blue);color:var(--white)}
+.btn-blue:hover{background:var(--blue-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35)}
+.btn-ghost{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;flex-wrap:wrap}
+@media(max-width:900px){.hero-stats{justify-content:center}}
+.hero-stat{text-align:left}
+@media(max-width:900px){.hero-stat{text-align:center}}
+.hero-stat .hs-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--white)}
+.hero-stat .hs-label{font-size:.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-top:.15rem}
+.hero-visual{position:relative}
+.hero-card{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:2rem;max-width:380px;margin:0 auto}
+.hero-card h3{font-size:.85rem;font-weight:600;color:var(--gray-300);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem}
+.hc-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hc-row:last-child{border-bottom:none}
+.hc-row .hc-label{font-size:.85rem;color:var(--gray-400);font-weight:400}
+.hc-row .hc-val{font-weight:700;font-size:.9rem}
+.hc-row .hc-val.good{color:var(--qr-green)}
+.hc-row .hc-val.great{color:var(--blue-light)}
+.hc-qr{margin-top:1.25rem;background:rgba(43,192,0,.08);border:1px solid rgba(43,192,0,.2);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem}
+.hc-qr-icon{width:28px;height:28px;border-radius:6px;background:var(--qr-green);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.8rem;font-weight:800;flex-shrink:0}
+.hc-qr-text{font-size:.72rem;color:var(--gray-300);line-height:1.4}
+.hc-qr-text strong{color:var(--qr-green);font-weight:700}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+
+/* ─── TRUST BAR ─── */
+.trust-bar{background:var(--gray-50);border-bottom:1px solid var(--gray-200);padding:1.5rem 2rem;text-align:center}
+.trust-bar p{font-size:.82rem;color:var(--gray-500);font-weight:500}
+.trust-bar strong{color:var(--navy);font-weight:700}
+
+/* ─── CERTIFIED PARTNER ─── */
+.partner-section{padding:4rem 2rem;background:var(--white);border-bottom:1px solid var(--gray-200)}
+.partner-layout{display:grid;grid-template-columns:auto 1fr;gap:3.5rem;align-items:center;max-width:960px;margin:0 auto}
+@media(max-width:800px){.partner-layout{grid-template-columns:1fr;text-align:center}}
+.partner-badge-block{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.partner-shield{width:120px;height:120px;border-radius:20px;background:linear-gradient(135deg,#0b1628,#1a3f7a);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(15,43,91,.2);position:relative}
+.partner-shield::after{content:'';position:absolute;inset:-3px;border-radius:22px;background:linear-gradient(135deg,var(--blue),var(--qr-green));z-index:-1}
+.partner-shield img{height:60px}
+.partner-certified-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--qr-green);text-align:center}
+.partner-content h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2rem);color:var(--gray-900);line-height:1.25;margin-bottom:1rem}
+.partner-content h2 em{font-style:normal;color:var(--qr-green)}
+.partner-content>p{color:var(--gray-500);font-size:.95rem;line-height:1.75;margin-bottom:1.25rem}
+.partner-pillars{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem}
+@media(max-width:600px){.partner-pillars{grid-template-columns:1fr}}
+.partner-pillar{display:flex;align-items:flex-start;gap:.6rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:1rem;transition:all .25s}
+.partner-pillar:hover{border-color:var(--qr-green);background:rgba(43,192,0,.02)}
+.partner-pillar .pp-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.partner-pillar .pp-text{font-size:.82rem;color:var(--gray-600);line-height:1.5}
+.partner-pillar .pp-text strong{color:var(--gray-900);display:block;font-size:.85rem;margin-bottom:.15rem}
+
+/* ─── MATCH WARNING ─── */
+.match-section{padding:4rem 2rem;background:var(--gray-900);color:var(--white);border-top:4px solid var(--red);position:relative;overflow:hidden}
+.match-section::before{content:'WARNING';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:clamp(6rem,15vw,12rem);font-weight:800;color:rgba(220,38,38,.04);pointer-events:none;white-space:nowrap}
+.match-section .container{position:relative;z-index:1;max-width:900px}
+.match-icon{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.match-icon .mi-triangle{width:48px;height:48px;border-radius:12px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.match-icon .mi-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:700}
+.match-section h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;line-height:1.2;margin-bottom:1.25rem;color:var(--white)}
+.match-section h2 em{font-style:normal;color:var(--red)}
+.match-section>p,.match-section .container>p{color:var(--gray-400);font-size:.95rem;line-height:1.75;margin-bottom:1.25rem;font-weight:300}
+.match-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin:2rem 0}
+@media(max-width:600px){.match-stats{grid-template-columns:1fr}}
+.match-stat{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:12px;padding:1.5rem;text-align:center}
+.match-stat .ms-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--red)}
+.match-stat .ms-text{font-size:.8rem;color:var(--gray-400);margin-top:.25rem;line-height:1.4}
+.match-escape{margin-top:2rem;background:rgba(43,192,0,.06);border:1px solid rgba(43,192,0,.2);border-radius:12px;padding:1.5rem 2rem;display:flex;align-items:flex-start;gap:1rem}
+@media(max-width:600px){.match-escape{flex-direction:column}}
+.match-escape .me-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+.match-escape .me-text{font-size:.9rem;color:var(--gray-300);line-height:1.65}
+.match-escape .me-text strong{color:var(--qr-green)}
+
+/* ─── PROBLEM ─── */
+.problem-section{padding:5rem 2rem;background:var(--white)}
+.problem-section .container{max-width:960px}
+.section-eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:.75rem;display:inline-flex;align-items:center;gap:.5rem}
+.section-eyebrow::before{content:'';width:20px;height:2px;background:var(--blue)}
+.section-heading{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:700;margin-bottom:1rem;color:var(--gray-900);line-height:1.2}
+.section-desc{color:var(--gray-500);font-size:1rem;max-width:640px;margin-bottom:2.5rem;line-height:1.75}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+@media(max-width:700px){.problem-grid{grid-template-columns:1fr}}
+.problem-card{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:12px;padding:1.75rem;transition:all .25s}
+.problem-card:hover{border-color:var(--red);background:rgba(220,38,38,.02)}
+.problem-card .pc-icon{font-size:1.2rem;margin-bottom:.75rem}
+.problem-card h4{font-size:.95rem;font-weight:700;color:var(--gray-900);margin-bottom:.4rem}
+.problem-card p{font-size:.88rem;color:var(--gray-500);line-height:1.6}
+
+/* ─── SOLUTION / QR ADVANTAGE ─── */
+.solution-section{padding:5rem 2rem;background:var(--navy-dark);color:var(--white)}
+.solution-section .section-eyebrow{color:var(--qr-green)}
+.solution-section .section-eyebrow::before{background:var(--qr-green)}
+.solution-section .section-heading{color:var(--white)}
+.solution-section .section-desc{color:var(--gray-400)}
+.solution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem}
+@media(max-width:800px){.solution-grid{grid-template-columns:1fr}}
+.sol-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:2rem;transition:all .25s}
+.sol-card:hover{border-color:rgba(43,192,0,.3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.sol-card .sol-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:rgba(37,99,235,.3);margin-bottom:.75rem}
+.sol-card h4{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.sol-card p{font-size:.88rem;color:var(--gray-400);line-height:1.6;font-weight:300}
+.sol-card .sol-tag{display:inline-block;margin-top:1rem;padding:.25rem .65rem;border-radius:50px;font-size:.65rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.sol-tag.qr{background:rgba(43,192,0,.1);color:var(--qr-green);border:1px solid rgba(43,192,0,.2)}
+.sol-tag.ap{background:rgba(37,99,235,.1);color:var(--blue-light);border:1px solid rgba(37,99,235,.2)}
+
+/* ─── QR PARTNERSHIP ─── */
+.qr-section{padding:5rem 2rem;background:var(--white);border-top:1px solid var(--gray-200)}
+.qr-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:2.5rem}
+@media(max-width:800px){.qr-layout{grid-template-columns:1fr}}
+.qr-graphic{background:linear-gradient(135deg,var(--navy-dark),var(--navy));border-radius:16px;padding:2.5rem;color:var(--white);position:relative;overflow:hidden}
+.qr-graphic::after{content:'';position:absolute;top:-20%;right:-15%;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(43,192,0,.12) 0%,transparent 70%)}
+.qr-graphic h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:1.5rem;position:relative;z-index:1}
+.qr-flow{position:relative;z-index:1}
+.qr-flow-step{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1.25rem}
+.qr-flow-step:last-child{margin-bottom:0}
+.qr-flow-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+.qr-flow-dot.blue{background:rgba(37,99,235,.2);color:var(--blue-light);border:1px solid rgba(37,99,235,.3)}
+.qr-flow-dot.green{background:rgba(43,192,0,.15);color:var(--qr-green);border:1px solid rgba(43,192,0,.3)}
+.qr-flow-text{font-size:.85rem;color:var(--gray-300);line-height:1.55;font-weight:300}
+.qr-flow-text strong{color:var(--white);font-weight:600}
+.qr-content h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gray-900);margin-bottom:.75rem;line-height:1.3}
+.qr-content>p{color:var(--gray-500);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem}
+.qr-benefits{display:flex;flex-direction:column;gap:.75rem}
+.qr-benefit{display:flex;align-items:flex-start;gap:.6rem;font-size:.9rem;color:var(--gray-600);line-height:1.5}
+.qr-benefit .qb-check{color:var(--qr-green);font-weight:700;flex-shrink:0;margin-top:.1rem}
+
+/* ─── SERVICES ─── */
+.services-section{padding:5rem 2rem;background:var(--gray-50);border-top:1px solid var(--gray-200)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2.5rem}
+.service-card{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:2rem;transition:all .25s}
+.service-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(37,99,235,.08);transform:translateY(-2px)}
+.service-card .sc-icon{width:40px;height:40px;border-radius:10px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem}
+.service-card h4{font-size:.98rem;font-weight:700;color:var(--gray-900);margin-bottom:.4rem}
+.service-card p{font-size:.86rem;color:var(--gray-500);line-height:1.6}
+
+/* ─── INDUSTRIES ─── */
+.industries-section{padding:5rem 2rem;background:var(--white);border-top:1px solid var(--gray-200)}
+.ind-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.ind-tag{padding:.55rem 1.25rem;border:1px solid var(--gray-200);border-radius:50px;font-size:.85rem;font-weight:500;color:var(--gray-600);background:var(--white);transition:all .2s}
+.ind-tag:hover{border-color:var(--navy);color:var(--navy);background:var(--sky)}
+.ind-tag.featured{background:var(--navy);color:var(--white);border-color:var(--navy);font-weight:600}
+
+/* ─── GUARANTEE ─── */
+.guarantee-section{padding:4rem 2rem;background:var(--navy-dark);color:var(--white);text-align:center}
+.guarantee-box{max-width:700px;margin:0 auto;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:3rem}
+.guarantee-box .gb-amount{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:800;color:var(--blue-light);line-height:1}
+.guarantee-box h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin:.75rem 0;color:var(--white)}
+.guarantee-box p{color:var(--gray-400);font-size:.95rem;line-height:1.7;font-weight:300;max-width:500px;margin:0 auto 1.5rem}
+.guarantee-box .gb-fine{font-size:.78rem;color:var(--gray-500);font-style:italic}
+
+/* ─── CREDIBILITY ─── */
+.cred-section{padding:4rem 2rem;background:var(--gray-50);border-top:1px solid var(--gray-200)}
+.cred-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
+.cred-card{text-align:center;padding:1.5rem}
+.cred-card .cc-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--navy)}
+.cred-card p{font-size:.85rem;color:var(--gray-500);margin-top:.25rem}
+
+/* ─── APPLY / CTA ─── */
+.apply-section{padding:5rem 2rem;background:var(--white);border-top:1px solid var(--gray-200)}
+.apply-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+@media(max-width:800px){.apply-layout{grid-template-columns:1fr}}
+.apply-content h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.4rem);color:var(--gray-900);margin-bottom:1rem;line-height:1.2}
+.apply-content p{color:var(--gray-500);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem}
+.apply-steps{display:flex;flex-direction:column;gap:1rem}
+.apply-step{display:flex;align-items:flex-start;gap:.75rem}
+.apply-step .as-num{width:28px;height:28px;border-radius:50%;background:var(--sky);color:var(--blue);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.apply-step p{font-size:.88rem;color:var(--gray-600);line-height:1.5}
+.apply-step strong{color:var(--gray-900)}
+.apply-form{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:16px;padding:2.5rem}
+.apply-form h3{font-size:1.1rem;font-weight:700;color:var(--gray-900);margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.78rem;font-weight:600;color:var(--gray-600);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
+.form-group input,.form-group select{width:100%;padding:.7rem .85rem;border:1px solid var(--gray-200);border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:var(--gray-800);background:var(--white);transition:border-color .2s;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--blue)}
+.form-group input::placeholder{color:var(--gray-400)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.btn-submit{width:100%;padding:.85rem;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;margin-top:.5rem}
+.btn-submit:hover{background:var(--navy-light);transform:translateY(-1px);box-shadow:0 4px 16px rgba(15,43,91,.3)}
+.form-fine{text-align:center;font-size:.75rem;color:var(--gray-400);margin-top:1rem}
+
+/* ─── FOOTER ─── */
+.footer{background:var(--navy-dark);color:var(--white);padding:3rem 2rem 2rem}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.06)}
+@media(max-width:700px){.footer-top{grid-template-columns:1fr}}
+.footer-brand{display:flex;align-items:center;gap:.65rem;margin-bottom:1rem}
+.footer-brand img{height:40px;filter:brightness(0) invert(1);opacity:.8}
+.footer p.footer-desc{font-size:.85rem;color:var(--gray-400);line-height:1.6;max-width:320px;font-weight:300}
+.footer-col h4{font-size:.75rem;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem}
+.footer-col a{display:block;font-size:.88rem;color:var(--gray-300);text-decoration:none;margin-bottom:.6rem;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
+.footer-bottom p{font-size:.78rem;color:var(--gray-500)}
+.footer-qr{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--gray-500)}
+.footer-qr .qr-dot{width:5px;height:5px;border-radius:50%;background:var(--qr-green)}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <img src="https://img1.wsimg.com/isteam/ip/f2e609a7-fc89-49ff-9500-02f25a7cd5ba/AinsworthPayments_horz%20(1).png/:/rs=h:97,cg:true,m/qt=q:95" alt="Ainsworth Payments">
+  </a>
+  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#industries">Industries</a>
+    <a href="#quickrefund">QuickRefund Advantage</a>
+    <a href="#about">About</a>
+    <a href="#apply" class="nav-cta">Start Saving Today</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container">
+    <div>
+      <div class="hero-badge"><span class="badge-dot"></span> QuickRefund Certified Partner</div>
+      <h1>High-Risk Merchants Deserve <em>Better Processing.</em></h1>
+      <p class="hero-sub">Ainsworth Payments gets you approved faster, with lower reserves and better rates — backed by 25+ years of merchant services expertise and QuickRefund's pre-dispute resolution technology.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-blue" href="#apply">Apply Now — Free Consultation</a>
+        <a class="btn btn-ghost" href="#quickrefund">See the QR Advantage ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hs-num">25+</div><div class="hs-label">Years Experience</div></div>
+        <div class="hero-stat"><div class="hs-num">50%</div><div class="hs-label">Lower Fees Guaranteed</div></div>
+        <div class="hero-stat"><div class="hs-num">48hr</div><div class="hs-label">Avg. Approval Time</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <h3>Merchant Approval Preview</h3>
+        <div class="hc-row"><span class="hc-label">Industry</span><span class="hc-val">Nutraceuticals</span></div>
+        <div class="hc-row"><span class="hc-label">Monthly Volume</span><span class="hc-val">$180K</span></div>
+        <div class="hc-row"><span class="hc-label">Reserve Requirement</span><span class="hc-val good">Reduced 40%</span></div>
+        <div class="hc-row"><span class="hc-label">Processing Rate</span><span class="hc-val great">2.4% + $0.25</span></div>
+        <div class="hc-row"><span class="hc-label">Approval Status</span><span class="hc-val good">Approved ✓</span></div>
+        <div class="hc-qr">
+          <div class="hc-qr-icon">QR</div>
+          <div class="hc-qr-text"><strong>QuickRefund Active</strong><br>Pre-dispute protection enabled — VAMP ratio monitored and managed automatically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRUST BAR ═══ -->
+<div class="trust-bar">
+  <p><strong>We guarantee to reduce your processing fees by 50%</strong> — or we'll write you a check for the difference.</p>
+</div>
+
+<!-- ═══ CERTIFIED QR PARTNER ═══ -->
+<section class="partner-section">
+  <div class="partner-layout">
+    <div class="partner-badge-block">
+      <div class="partner-shield">
+        <img src="https://getquickrefund.com/quickrefund_logo.svg" alt="QuickRefund">
+      </div>
+      <div class="partner-certified-label">Certified Partner</div>
+    </div>
+    <div class="partner-content">
+      <h2>We Don't Just Process Payments. We Protect Them With <em>QuickRefund.</em></h2>
+      <p>Most ISOs and payment companies hand you a merchant account and wish you luck with chargebacks. We're different. Ainsworth is a certified QuickRefund partner — meaning every merchant we onboard gets access to the only pre-dispute resolution technology in the industry.</p>
+      <p>QuickRefund intercepts consumer disputes before they enter the banking system. No chargebacks filed. No VAMP ratio damage. No account at risk. This isn't an add-on we sell separately — it's built into how we do business. It's why acquirers approve our merchants faster, with lower reserves and better rates. And it's why our merchants stay approved.</p>
+      <div class="partner-pillars">
+        <div class="partner-pillar reveal">
+          <span class="pp-icon">🛡️</span>
+          <div class="pp-text"><strong>Pre-Dispute, Not Post-Dispute</strong>Other companies use alert services that react after a chargeback is filed. QuickRefund resolves disputes before they exist.</div>
+        </div>
+        <div class="partner-pillar reveal">
+          <span class="pp-icon">⚡</span>
+          <div class="pp-text"><strong>Acquirers Trust Our Applications</strong>When your application includes QuickRefund protection, underwriters see managed risk — not a gamble. That changes the approval conversation.</div>
+        </div>
+        <div class="partner-pillar reveal">
+          <span class="pp-icon">📉</span>
+          <div class="pp-text"><strong>Lower Reserves From Day One</strong>Acquirers reduce reserve requirements when dispute risk is proactively managed. Our merchants keep more of their cash flow.</div>
+        </div>
+        <div class="partner-pillar reveal">
+          <span class="pp-icon">🔒</span>
+          <div class="pp-text"><strong>Your Account Stays Open. Period.</strong>VAMP thresholds don't threaten our merchants the way they threaten others. QuickRefund keeps your ratios clean permanently.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MATCH WARNING ═══ -->
+<section class="match-section">
+  <div class="container">
+    <div class="match-icon">
+      <div class="mi-triangle">⚠️</div>
+      <div class="mi-label">Industry Alert</div>
+    </div>
+    <h2>Has Your MID Been Terminated? Are You On the <em>MATCH List?</em> Are You Next?</h2>
+    <p>If your merchant account has been shut down, you may already be on Visa's MATCH file (Member Alert to Control High-Risk Merchants) — a blacklist that follows you for five years and makes it nearly impossible to get approved for a new account anywhere. And if you're not on it yet but your VAMP ratio is climbing, you're one bad month away from joining it.</p>
+    <p>This is the reality for high-risk merchants right now. Acquirers are terminating accounts at record rates. Visa's VAMP enforcement tightened to 1.5% on April 1, 2026. Processors that used to tolerate higher chargebacks are pulling the plug — and once you're on MATCH, your options disappear overnight.</p>
+    <div class="match-stats">
+      <div class="match-stat reveal"><div class="ms-num">5 yrs</div><div class="ms-text">How long you stay on the MATCH list once terminated</div></div>
+      <div class="match-stat reveal"><div class="ms-num">3-5x</div><div class="ms-text">What high-risk merchants overpay vs. standard-risk — if they can even get approved</div></div>
+      <div class="match-stat reveal"><div class="ms-num">1.5%</div><div class="ms-text">Visa's VAMP "Excessive" threshold — cross it and your acquirer may terminate you</div></div>
+    </div>
+    <div class="match-escape reveal">
+      <div class="me-icon">🟢</div>
+      <div class="me-text"><strong>Ainsworth + QuickRefund is the way out.</strong> Whether you've been terminated, you're on MATCH, or you're trying to avoid getting there — we specialize in getting high-risk merchants re-approved with lower reserves, better rates, and the pre-dispute protection that keeps your account safe permanently. Other ISOs can't offer this. We can, because we're the only certified QuickRefund partner built specifically for high-risk placement.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem-section">
+  <div class="container">
+    <div class="section-eyebrow">The Broken System</div>
+    <h2 class="section-heading">High-Risk Merchants Are Getting Crushed. The Industry Doesn't Care. We Do.</h2>
+    <p class="section-desc">You're running a legitimate business in a category that processors have decided is "risky." The result? You're punished with fees, reserves, and restrictions that would be unthinkable for a standard-risk merchant. Meanwhile, you're generating real revenue and serving real customers — you just can't find a processor that treats you like it.</p>
+    <div class="problem-grid">
+      <div class="problem-card reveal"><div class="pc-icon">💸</div><h4>You're Paying 3-5x What You Should</h4><p>High-risk merchants routinely pay rates of 4-8% plus per-transaction fees, hidden monthly charges, and inflated PCI fees. Your "processor" is profiting from your desperation. We cut that in half — guaranteed.</p></div>
+      <div class="problem-card reveal"><div class="pc-icon">🔒</div><h4>Your Cash Is Held Hostage</h4><p>Acquirers hold 10-50% of your revenue in rolling reserves for 6-12 months. That's your working capital — your ability to grow, hire, and operate — locked in someone else's account. We negotiate dramatically lower reserves from day one.</p></div>
+      <div class="problem-card reveal"><div class="pc-icon">🚫</div><h4>You've Been Declined or Terminated</h4><p>You've applied to 5 processors and been declined by all of them. Or worse — you were processing fine until one bad chargeback month and your account was shut down. Now you're on MATCH and nobody will touch you. We will.</p></div>
+      <div class="problem-card reveal"><div class="pc-icon">💀</div><h4>One Chargeback Spike = Game Over</h4><p>Without pre-dispute protection, a single surge in chargebacks can push you past VAMP thresholds, trigger acquirer review, and end your processing relationship. You lose your MID, your revenue, and potentially your business. That doesn't happen with us.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SOLUTION / HOW WE FIX IT ═══ -->
+<section class="solution-section">
+  <div class="container">
+    <div class="section-eyebrow">How We Fix It</div>
+    <h2 class="section-heading">Better Approvals. Lower Reserves. Protected Accounts.</h2>
+    <p class="section-desc">Ainsworth Payments combines 25+ years of acquiring relationships with QuickRefund's pre-dispute technology to fundamentally change how high-risk merchants get underwritten and managed.</p>
+    <div class="solution-grid">
+      <div class="sol-card reveal">
+        <div class="sol-num">01</div>
+        <h4>We Know the Right Acquirers</h4>
+        <p>Our decades-long relationships with multiple acquiring banks mean we match you with the processor that actually wants your business — not one that'll cap you in 90 days.</p>
+        <span class="sol-tag ap">Ainsworth Expertise</span>
+      </div>
+      <div class="sol-card reveal">
+        <div class="sol-num">02</div>
+        <h4>QuickRefund Reduces Your Risk Profile</h4>
+        <p>When we present your application with QuickRefund pre-dispute protection already in place, acquirers see a lower risk. That means faster approvals, lower reserves, and better rates from day one.</p>
+        <span class="sol-tag qr">QuickRefund Advantage</span>
+      </div>
+      <div class="sol-card reveal">
+        <div class="sol-num">03</div>
+        <h4>Your Account Stays Open</h4>
+        <p>QuickRefund intercepts disputes before they become chargebacks — keeping your VAMP ratio clean, your reserves low, and your processing relationship protected for the long term.</p>
+        <span class="sol-tag qr">QuickRefund Advantage</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QR PARTNERSHIP DEEP DIVE ═══ -->
+<section class="qr-section" id="quickrefund">
+  <div class="container">
+    <div class="section-eyebrow">The QuickRefund Advantage</div>
+    <h2 class="section-heading">Pre-Dispute Protection That Gets You Approved Faster.</h2>
+    <p class="section-desc">QuickRefund resolves consumer disputes before they enter the banking system — no chargebacks, no VAMP ratio damage, no account risk. When acquirers see QuickRefund on your application, they underwrite differently.</p>
+    <div class="qr-layout">
+      <div class="qr-graphic">
+        <h3>How QuickRefund Protects Your Account</h3>
+        <div class="qr-flow">
+          <div class="qr-flow-step">
+            <div class="qr-flow-dot blue">1</div>
+            <div class="qr-flow-text"><strong>Consumer questions a charge</strong> — instead of calling their bank, they receive a branded message from QuickRefund.</div>
+          </div>
+          <div class="qr-flow-step">
+            <div class="qr-flow-dot green">2</div>
+            <div class="qr-flow-text"><strong>AI chat resolves confusion</strong> — if the consumer recognizes the charge, no action needed. If not, one-click refund.</div>
+          </div>
+          <div class="qr-flow-step">
+            <div class="qr-flow-dot green">3</div>
+            <div class="qr-flow-text"><strong>Refund executes at the gateway</strong> — against the original transaction, back to the original card. Server-to-server. Auditable.</div>
+          </div>
+          <div class="qr-flow-step">
+            <div class="qr-flow-dot blue">4</div>
+            <div class="qr-flow-text"><strong>No chargeback is filed</strong> — no TC40, no TC15, no VAMP ratio impact. Your acquirer sees clean metrics.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qr-content">
+        <h3>Why Acquirers Approve QuickRefund Merchants Faster</h3>
+        <p>When your application includes pre-dispute protection, acquirers know you have a systemic plan for managing chargebacks — not just alerts and prayers. That changes the underwriting conversation.</p>
+        <div class="qr-benefits">
+          <div class="qr-benefit"><span class="qb-check">✓</span> Lower reserves — acquirers reduce hold requirements when dispute risk is managed proactively</div>
+          <div class="qr-benefit"><span class="qb-check">✓</span> Faster approvals — risk teams spend less time deliberating when protection is already in place</div>
+          <div class="qr-benefit"><span class="qb-check">✓</span> Better rates — lower risk profile translates directly to lower processing fees</div>
+          <div class="qr-benefit"><span class="qb-check">✓</span> Account longevity — merchants stay below VAMP thresholds permanently, not just temporarily</div>
+          <div class="qr-benefit"><span class="qb-check">✓</span> 5-minute setup — no engineering team required, no multi-week integration projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="section-eyebrow">Our Services</div>
+    <h2 class="section-heading">Full-Service Merchant Processing. Not Just a Gateway.</h2>
+    <p class="section-desc">From application to approval to ongoing account management, Ainsworth handles everything so you can focus on running your business.</p>
+    <div class="services-grid">
+      <div class="service-card reveal"><div class="sc-icon">💳</div><h4>Payment Processing</h4><p>Accept all major credit and debit cards, mobile wallets, and ACH. Competitive rates negotiated by our team — not a generic rate card.</p></div>
+      <div class="service-card reveal"><div class="sc-icon">📋</div><h4>Application & Underwriting</h4><p>We prepare your application, match you with the right acquirer, and manage the underwriting process. Most merchants are approved in 48 hours.</p></div>
+      <div class="service-card reveal"><div class="sc-icon">🔄</div><h4>Processor Transition</h4><p>Switching from another provider? We handle the full transition — cancellation, equipment swap, and go-live — with zero downtime.</p></div>
+      <div class="service-card reveal"><div class="sc-icon">🛡️</div><h4>Chargeback Protection</h4><p>Every Ainsworth merchant gets access to QuickRefund's pre-dispute resolution. Disputes are intercepted before they become chargebacks.</p></div>
+      <div class="service-card reveal"><div class="sc-icon">📊</div><h4>Reporting & Reconciliation</h4><p>Real-time dashboard for transaction monitoring, daily reconciliation, and fee transparency. No surprises on your statement.</p></div>
+      <div class="service-card reveal"><div class="sc-icon">🤝</div><h4>Dedicated Account Management</h4><p>A named account manager who knows your business, answers your calls, and proactively monitors your account health.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INDUSTRIES ═══ -->
+<section class="industries-section" id="industries">
+  <div class="container">
+    <div class="section-eyebrow">Industries We Serve</div>
+    <h2 class="section-heading">Specialists in Hard-to-Place Merchants.</h2>
+    <p class="section-desc">While other processors run from high-risk verticals, we've built relationships specifically to serve them. If you've been declined elsewhere, talk to us.</p>
+    <div class="ind-grid">
+      <span class="ind-tag featured">Nutraceuticals</span>
+      <span class="ind-tag featured">CBD & Hemp</span>
+      <span class="ind-tag featured">Subscription Services</span>
+      <span class="ind-tag">E-Commerce</span>
+      <span class="ind-tag">Travel & Hospitality</span>
+      <span class="ind-tag">Digital Goods</span>
+      <span class="ind-tag">Health & Wellness</span>
+      <span class="ind-tag">Supplements</span>
+      <span class="ind-tag">Coaching & Consulting</span>
+      <span class="ind-tag">SaaS / Recurring Billing</span>
+      <span class="ind-tag">Firearms & Ammunition</span>
+      <span class="ind-tag">Adult Products</span>
+      <span class="ind-tag">Vaping & Tobacco</span>
+      <span class="ind-tag">Online Gaming</span>
+      <span class="ind-tag">Debt Collection</span>
+      <span class="ind-tag">Tech Support</span>
+      <span class="ind-tag">Multi-Level Marketing</span>
+      <span class="ind-tag">Fantasy Sports</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GUARANTEE ═══ -->
+<section class="guarantee-section">
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <div class="gb-amount">50%</div>
+      <h3>We Guarantee to Cut Your Processing Fees in Half.</h3>
+      <p>If we can't reduce your current processing fees by at least 50%, we'll write you a check for the difference. No gimmicks, no fine print, no hidden fees. Our rates are that good because our acquiring relationships are that strong.</p>
+      <a class="btn btn-blue" href="#apply" style="margin-bottom:1rem">Get Your Free Rate Analysis</a><br>
+      <span class="gb-fine">Applies to qualified merchants currently processing. Contact us for details.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CREDIBILITY ═══ -->
+<section class="cred-section" id="about">
+  <div class="container">
+    <div class="section-eyebrow">Why Ainsworth</div>
+    <h2 class="section-heading">Built on Relationships. Backed by Results.</h2>
+    <p class="section-desc">Ainsworth Payments was founded by payment technology specialists who've spent decades building the relationships that get merchants approved. We're not a reseller — we're your advocate at the underwriting table.</p>
+    <div class="cred-grid">
+      <div class="cred-card reveal"><div class="cc-num">25+</div><p>Years in merchant services and payment technology</p></div>
+      <div class="cred-card reveal"><div class="cc-num">48hr</div><p>Average approval time for qualified merchants</p></div>
+      <div class="cred-card reveal"><div class="cc-num">50%</div><p>Guaranteed fee reduction or we write you a check</p></div>
+      <div class="cred-card reveal"><div class="cc-num">24/7</div><p>Dedicated support from named account managers</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APPLY ═══ -->
+<section class="apply-section" id="apply">
+  <div class="container">
+    <div class="apply-layout">
+      <div class="apply-content">
+        <div class="section-eyebrow">Get Started</div>
+        <h2>Apply in 2 Minutes. Get Approved in 48 Hours.</h2>
+        <p>Fill out the form and our team will review your application, match you with the best acquirer for your business, and have you processing — with QuickRefund protection active — in days, not weeks.</p>
+        <div class="apply-steps">
+          <div class="apply-step"><div class="as-num">1</div><p><strong>Submit your info</strong> — basic business details and current processing statement (if switching).</p></div>
+          <div class="apply-step"><div class="as-num">2</div><p><strong>We find your match</strong> — our team identifies the best acquirer for your industry, volume, and risk profile.</p></div>
+          <div class="apply-step"><div class="as-num">3</div><p><strong>Get approved & go live</strong> — most merchants are processing within 48 hours, with QuickRefund active from day one.</p></div>
+        </div>
+      </div>
+      <div class="apply-form">
+        <h3>Start Your Application</h3>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="John"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+        </div>
+        <div class="form-group"><label>Company Name</label><input type="text" placeholder="Your business name"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="john@company.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 123-4567"></div>
+        <div class="form-group"><label>Industry</label>
+          <select>
+            <option value="">Select your industry...</option>
+            <option>Nutraceuticals / Supplements</option>
+            <option>CBD / Hemp</option>
+            <option>Subscription Services</option>
+            <option>E-Commerce</option>
+            <option>Health & Wellness</option>
+            <option>Travel & Hospitality</option>
+            <option>Digital Goods / SaaS</option>
+            <option>Other High-Risk</option>
+            <option>Standard Risk</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Monthly Processing Volume</label>
+          <select>
+            <option value="">Select estimated volume...</option>
+            <option>Under $25K</option>
+            <option>$25K - $100K</option>
+            <option>$100K - $500K</option>
+            <option>$500K - $1M</option>
+            <option>Over $1M</option>
+          </select>
+        </div>
+        <button class="btn-submit">Submit Application</button>
+        <p class="form-fine">No commitment required. Your information is secure and confidential.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <img src="https://img1.wsimg.com/isteam/ip/f2e609a7-fc89-49ff-9500-02f25a7cd5ba/AinsworthPayments_horz%20(1).png/:/rs=h:97,cg:true,m/qt=q:95" alt="Ainsworth Payments">
+        </div>
+        <p class="footer-desc">High-risk merchant processing specialists. 25+ years of expertise. QuickRefund certified partner for pre-dispute chargeback prevention.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#industries">Industries</a>
+        <a href="#apply">Apply Now</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:info@ainsworthpayments.com">info@ainsworthpayments.com</a>
+        <a href="tel:+1">Call Us</a>
+        <a href="#apply">Start Saving Today</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 – 2026 Ainsworth Payments. All rights reserved.</p>
+      <div class="footer-qr"><span class="qr-dot"></span> Powered by QuickRefund pre-dispute technology</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelector('.hamburger').addEventListener('click',function(){
+  this.classList.toggle('active');
+  document.querySelector('.nav-links').classList.toggle('open');
+});
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('revealed')});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)});
+</script>
+
+</body>
+</html>

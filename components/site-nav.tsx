@@ -44,14 +44,14 @@ export function SiteNav({ variant = "light" }: { variant?: "light" | "dark" }) {
             For agents
           </Link>
           <Link
-            href="/#how"
+            href="/merchants"
             className={`hidden md:inline ${
               dark
                 ? "text-white/80 hover:text-white"
                 : "text-[var(--color-ink-3)] hover:text-[var(--color-ink)]"
             }`}
           >
-            How it works
+            For merchants
           </Link>
           <Link
             href="/about"

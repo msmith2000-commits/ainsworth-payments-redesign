@@ -32,7 +32,7 @@ export function SiteFooter() {
         </div>
         <FooterCol title="Site">
           <Link href="/agents">For agents</Link>
-          <Link href="/#how">How it works</Link>
+          <Link href="/merchants">For merchants</Link>
           <Link href="/#flywheel">QuickRefund flywheel</Link>
           <Link href="/about">About</Link>
         </FooterCol>

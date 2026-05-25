@@ -15,6 +15,7 @@ export default function MerchantsPage() {
       <SiteNav variant="dark" />
       <Hero />
       <Pillars />
+      <CompliancePreflight />
       <HowItGoes />
       <ApplyForm />
       <SiteFooter />
@@ -141,6 +142,204 @@ function Pillar({
       <p className="text-[var(--color-muted)] text-[0.95rem] leading-relaxed">
         {body}
       </p>
+    </div>
+  );
+}
+
+function CompliancePreflight() {
+  // Merchant-facing framing of the same tool the agent uses. Same engine,
+  // same rubric, same severity scheme. Different headline because the
+  // merchant's value-prop is approval odds + capacity, not "save my agent
+  // time."
+  const findings: Array<{
+    code: string;
+    severity: "STOP" | "FLAG" | "REQUIRED";
+    title: string;
+    detail: string;
+  }> = [
+    {
+      code: "A1",
+      severity: "STOP",
+      title: "Bacteriostatic water sold alongside peptides",
+      detail:
+        "Treats the peptide as injectable. FDA flags this consistently. Move to a separate domain or remove from the cart.",
+    },
+    {
+      code: "B3",
+      severity: "FLAG",
+      title: "Disease-state claims on a structure/function product",
+      detail:
+        "DSHEA line. \"Treats arthritis\" becomes \"supports joint comfort.\" The rubric shows you the specific copy edits.",
+    },
+    {
+      code: "D2",
+      severity: "REQUIRED",
+      title: "Missing structure/function disclaimer",
+      detail:
+        "Baseline expectation. One line of copy. Fixed in five minutes.",
+    },
+  ];
+
+  return (
+    <section
+      id="compliance"
+      className="section bg-[var(--color-ink)] text-white relative overflow-hidden scroll-mt-24"
+    >
+      <div
+        aria-hidden
+        className="absolute -top-32 -left-20 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(43,192,0,0.16) 0%, transparent 60%)",
+        }}
+      />
+      <div className="wrap relative grid lg:grid-cols-[1.05fr_1fr] gap-14 items-start">
+        <div>
+          <span className="eyebrow eyebrow-on-dark">Compliance pre-flight</span>
+          <h2 className="mt-4 text-[2.1rem] sm:text-[2.5rem] font-semibold tracking-[-0.025em] leading-[1.1] max-w-2xl">
+            Self-review your site before the bank sees it.
+          </h2>
+          <p className="mt-6 text-white/70 text-lg leading-relaxed max-w-xl">
+            Most high-risk applications die on the merchant&apos;s website, not on
+            the merchant. Disease claims that should be structure-function
+            claims. Missing disclaimers. Inventory you didn&apos;t realize was a
+            problem. The underwriter sees it, the deal stalls or declines, and
+            most of the time you never get told what to fix.
+          </p>
+          <p className="mt-4 text-white/55 leading-relaxed max-w-xl">
+            When you&apos;re in our portal, you get the same compliance
+            pre-flight tool your agent has. Built on 193 real FDA warning
+            letters. Each finding shows you the FDA quote and tells you exactly
+            what to change. Run it as many times as you want. The cleaner you
+            ship, the faster you approve, the more capacity the bank gives you.
+          </p>
+
+          <div className="mt-9 grid sm:grid-cols-3 gap-4 max-w-xl">
+            <CompStat n="193" label="FDA warning letters" />
+            <CompStat n="56" label="rubric-coded issues" />
+            <CompStat n="2" label="verticals covered" />
+          </div>
+
+          <div className="mt-9 rounded-lg border border-white/10 bg-white/[0.03] p-5 max-w-xl">
+            <div className="text-[0.7rem] uppercase tracking-[0.14em] text-white/45 font-semibold">
+              Why it matters for you
+            </div>
+            <ul className="mt-3 space-y-2 text-white/75 text-[0.95rem] leading-relaxed">
+              <li className="flex gap-3">
+                <span
+                  aria-hidden
+                  className="text-white/40"
+                  style={{ color: "var(--color-qr)" }}
+                >
+                  →
+                </span>
+                Higher approval odds. Clean sites get yes, messy sites stall.
+              </li>
+              <li className="flex gap-3">
+                <span
+                  aria-hidden
+                  className="text-white/40"
+                  style={{ color: "var(--color-qr)" }}
+                >
+                  →
+                </span>
+                Bigger processing limits. The bank rewards merchants whose risk
+                profile they can defend.
+              </li>
+              <li className="flex gap-3">
+                <span
+                  aria-hidden
+                  className="text-white/40"
+                  style={{ color: "var(--color-qr)" }}
+                >
+                  →
+                </span>
+                Account longevity. Sites that pass underwriting clean also
+                survive ongoing card-network reviews.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur p-5 sm:p-6">
+          <div className="flex items-center justify-between text-xs text-white/55 mb-4">
+            <span className="mono">/dashboard/screen · peptide-v1.0</span>
+            <span>3 findings</span>
+          </div>
+          <div className="rounded-xl bg-[rgba(255,255,255,0.02)] border border-white/5 overflow-hidden">
+            {findings.map((f) => (
+              <div
+                key={f.code}
+                className="px-4 py-4 border-b border-white/5 last:border-0"
+              >
+                <div className="flex items-center gap-3 mb-1.5">
+                  <CompSeverityTag severity={f.severity} />
+                  <span className="mono">{f.code}</span>
+                </div>
+                <div className="text-[0.98rem] font-medium text-white leading-snug">
+                  {f.title}
+                </div>
+                <div className="text-[0.85rem] text-white/55 mt-1.5 leading-relaxed">
+                  {f.detail}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 text-[0.72rem] text-white/40">
+            What you see in your dashboard. Re-run as often as you like.
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CompSeverityTag({
+  severity,
+}: {
+  severity: "STOP" | "FLAG" | "REQUIRED";
+}) {
+  // Color + label pairs survive colorblind/grayscale viewing.
+  const styles: Record<
+    "STOP" | "FLAG" | "REQUIRED",
+    { bg: string; fg: string; border: string }
+  > = {
+    STOP: {
+      bg: "rgba(220,38,38,0.12)",
+      fg: "#fca5a5",
+      border: "rgba(220,38,38,0.35)",
+    },
+    FLAG: {
+      bg: "rgba(245,158,11,0.12)",
+      fg: "#fbbf24",
+      border: "rgba(245,158,11,0.35)",
+    },
+    REQUIRED: {
+      bg: "rgba(37,99,235,0.12)",
+      fg: "#93c5fd",
+      border: "rgba(37,99,235,0.35)",
+    },
+  };
+  const s = styles[severity];
+  return (
+    <span
+      className="inline-flex items-center text-[0.65rem] font-bold tracking-[0.08em] px-2 py-0.5 rounded-md border"
+      style={{ background: s.bg, color: s.fg, borderColor: s.border }}
+    >
+      {severity}
+    </span>
+  );
+}
+
+function CompStat({ n, label }: { n: string; label: string }) {
+  return (
+    <div>
+      <div className="text-[1.6rem] font-semibold tracking-tight text-white tabular-nums">
+        {n}
+      </div>
+      <div className="text-[0.7rem] uppercase tracking-[0.12em] text-white/45 mt-1 leading-tight">
+        {label}
+      </div>
     </div>
   );
 }

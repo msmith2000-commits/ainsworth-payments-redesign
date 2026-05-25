@@ -193,10 +193,15 @@ function CompliancePreflight() {
             <Stat n="2" label="verticals covered" />
           </div>
 
-          <div className="mt-9">
-            <p className="text-white/55 text-sm leading-relaxed max-w-xl">
-              Inside the agent portal. Not a public utility. Your IP, in your
-              toolkit, when you sign on as an Ainsworth agent.
+          <div className="mt-9 rounded-lg border border-white/10 bg-white/[0.03] p-5 max-w-xl">
+            <div className="text-[0.7rem] uppercase tracking-[0.14em] text-white/45 font-semibold">
+              Your merchant gets it too
+            </div>
+            <p className="mt-2 text-white/70 text-[0.95rem] leading-relaxed">
+              Same tool, same findings, in their own dashboard. You stop being
+              the bottleneck on every back-and-forth. The merchant cleans up
+              what they can. You become the judgment layer: what is worth
+              fighting, what to fix first, what the bank will actually flag.
             </p>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function SiteFooter() {
@@ -5,13 +6,29 @@ export function SiteFooter() {
     <footer className="bg-[var(--color-ink)] text-white">
       <div className="wrap py-14 grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
         <div>
-          <div className="text-lg font-semibold tracking-tight">
-            Ainsworth<span className="text-[var(--color-accent)]">.</span>
-          </div>
-          <p className="mt-3 text-sm text-white/60 max-w-sm leading-relaxed">
+          <Image
+            src="/ainsworth-logo.png"
+            alt="Ainsworth Payments"
+            width={800}
+            height={225}
+            className="h-8 w-auto [filter:brightness(0)_invert(1)]"
+          />
+          <p className="mt-4 text-sm text-white/60 max-w-sm leading-relaxed">
             The ISO built for agents who are tired of moving paper. One application
             across our entire banking network. Cleaner accounts via QuickRefund.
           </p>
+          <div className="mt-6 flex items-center gap-3">
+            <span className="text-[0.68rem] uppercase tracking-[0.14em] text-white/40">
+              Sister platform
+            </span>
+            <Image
+              src="/quickrefund-wordmark-white.svg"
+              alt="QuickRefund"
+              width={140}
+              height={28}
+              className="h-5 w-auto"
+            />
+          </div>
         </div>
         <FooterCol title="Site">
           <Link href="/agents">For agents</Link>
@@ -33,9 +50,7 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="wrap py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-white/45">
           <span>© 2026 Ainsworth Payments. All rights reserved.</span>
-          <span>
-            Sister platform: <span className="text-[var(--color-qr)] font-medium">QuickRefund</span>
-          </span>
+          <span>Built for the agents who close.</span>
         </div>
       </div>
     </footer>

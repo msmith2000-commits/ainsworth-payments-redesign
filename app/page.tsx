@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -403,11 +404,23 @@ function Flywheel() {
           <h2 className="mt-4 text-[2.1rem] sm:text-[2.6rem] font-semibold tracking-[-0.025em] leading-[1.1]">
             Every clean merchant makes the next one easier to place.
           </h2>
+          <div className="mt-6 inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border border-white/10 bg-white/[0.03]">
+            <span className="text-[0.68rem] uppercase tracking-[0.14em] text-white/45">
+              Sister platform
+            </span>
+            <Image
+              src="/quickrefund-wordmark-white.svg"
+              alt="QuickRefund"
+              width={140}
+              height={28}
+              className="h-5 w-auto"
+            />
+          </div>
           <p className="mt-6 text-white/70 text-lg leading-relaxed max-w-xl">
-            Our sister platform QuickRefund intercepts disputes before they
-            become chargebacks. The bank never sees the ratio damage. Across our
-            book, that turns into bigger limits, looser underwriting, and
-            harder verticals approved faster.
+            QuickRefund intercepts disputes before they become chargebacks. The
+            bank never sees the ratio damage. Across our book, that turns into
+            bigger limits, looser underwriting, and harder verticals approved
+            faster.
           </p>
           <p className="mt-4 text-white/55 leading-relaxed max-w-xl">
             No other ISO in our tier owns a chargeback platform. That is the

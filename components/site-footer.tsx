@@ -36,14 +36,15 @@ export function SiteFooter() {
           <Link href="/#flywheel">QuickRefund flywheel</Link>
           <Link href="/about">About</Link>
         </FooterCol>
-        <FooterCol title="Network">
-          <span className="text-white/80">Hagen Pay</span>
-          <span className="text-white/80">Esquire Bank</span>
-          <span className="text-white/80">Priority / CorduroPay</span>
-          <span className="text-white/40">More in pipeline</span>
+        <FooterCol title="Verticals">
+          <span className="text-white/80">Nutraceuticals</span>
+          <span className="text-white/80">Peptides</span>
+          <span className="text-white/80">Telehealth</span>
+          <span className="text-white/80">Digital goods</span>
+          <span className="text-white/40">High-risk specialists</span>
         </FooterCol>
         <FooterCol title="Contact">
-          <a href="mailto:hello@ainsworthpayments.com">hello@ainsworthpayments.com</a>
+          <a href="mailto:info@ainsworthpayments.com">info@ainsworthpayments.com</a>
           <Link href="/agents">Apply to be an agent</Link>
         </FooterCol>
       </div>

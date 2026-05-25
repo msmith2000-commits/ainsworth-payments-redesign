@@ -10,6 +10,7 @@ export default function HomePage() {
       <Hero />
       <ChallengeFrame />
       <Pillars />
+      <CompliancePreflightStrip />
       <HowItWorks />
       <Flywheel />
       <Network />
@@ -67,8 +68,8 @@ function Hero() {
             </Link>
           </div>
           <div className="mt-12 flex flex-wrap gap-x-10 gap-y-4 text-sm">
-            <Stat value="3 banks" label="live underwriting" />
-            <Stat value="1 application" label="across the network" />
+            <Stat value="Multiple banks" label="one application" />
+            <Stat value="High-risk" label="our specialty" />
             <Stat value="QuickRefund" label="sister platform" />
           </div>
         </div>
@@ -325,6 +326,45 @@ function Pillar({
   );
 }
 
+/* ───────────── COMPLIANCE PRE-FLIGHT STRIP ───────────── */
+
+function CompliancePreflightStrip() {
+  return (
+    <section className="bg-white">
+      <div className="wrap pb-4 md:pb-8 -mt-2">
+        <div className="rounded-xl border border-[var(--color-line)] bg-[var(--color-paper-2)] p-6 sm:p-8 grid md:grid-cols-[1fr_auto] gap-6 items-center">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span
+                className="mono"
+                style={{ color: "var(--color-accent)" }}
+              >
+                + bonus
+              </span>
+              <span className="h-px flex-1 bg-[var(--color-line)] max-w-[6rem]" />
+            </div>
+            <h3 className="text-[1.25rem] sm:text-[1.4rem] font-semibold tracking-tight leading-snug">
+              Every agent gets a compliance pre-flight tool.
+            </h3>
+            <p className="mt-2 text-[var(--color-muted)] leading-relaxed max-w-2xl">
+              Built on 193 real FDA warning letters. Run your merchant&apos;s
+              site through it before you submit. Cleaner package, higher approval
+              odds, bigger capacity from the bank. Other ISOs don&apos;t have this.
+            </p>
+          </div>
+          <Link
+            href="/agents#compliance"
+            className="btn btn-ghost whitespace-nowrap"
+          >
+            How it works
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────── HOW IT WORKS ─────────────────── */
 
 function HowItWorks() {
@@ -508,56 +548,49 @@ function Network() {
           <div>
             <span className="eyebrow">The network</span>
             <h2 className="mt-4 text-[2rem] font-semibold tracking-[-0.025em] leading-[1.1]">
-              Three banks. One application. Your choice goes to whichever underwriter wants the deal.
+              One application across our entire banking network.
             </h2>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4">
-            <BankCard
-              name="Hagen Pay"
-              role="Sponsor bank"
-              status="Live"
-            />
-            <BankCard name="Esquire Bank" role="Sponsor bank" status="Live" />
-            <BankCard
-              name="Priority / CorduroPay"
-              role="Sponsor bank"
-              status="Live"
-            />
+          <div className="space-y-4 text-[var(--color-ink-3)] text-[1.02rem] leading-relaxed max-w-2xl">
+            <p>
+              Multi-bank is table stakes. What is not table stakes: your merchant
+              fills one application, not three, and we route it to the
+              underwriter most likely to approve on day one.
+            </p>
+            <p className="text-[var(--color-muted)]">
+              We add and rotate sponsor relationships as the market moves. The
+              merchant&apos;s experience stays the same. One form. One portal.
+              One status view. Whatever bank ends up holding the MID.
+            </p>
           </div>
         </div>
-        <p className="mt-10 text-sm text-[var(--color-muted)] max-w-2xl">
-          Multi-bank is table stakes in the ISO category. What is not table stakes:
-          your merchant fills one application, not three, and we route it to the
-          bank most likely to approve it on day one.
-        </p>
+
+        <div className="mt-12 grid sm:grid-cols-3 gap-4">
+          <NetworkPoint
+            title="High-risk verticals"
+            body="Nutra, peptides, telehealth, digital goods, subscription. The categories most ISOs run from."
+          />
+          <NetworkPoint
+            title="Routing by appetite"
+            body="We pick the bank for the deal, not the deal for the bank. The merchant never has to know."
+          />
+          <NetworkPoint
+            title="Growing"
+            body="Our pipeline of sponsor banks expands every quarter. So does the breadth of what we can place."
+          />
+        </div>
       </div>
     </section>
   );
 }
 
-function BankCard({
-  name,
-  role,
-  status,
-}: {
-  name: string;
-  role: string;
-  status: string;
-}) {
+function NetworkPoint({ title, body }: { title: string; body: string }) {
   return (
     <div className="card">
-      <div className="text-[0.7rem] uppercase tracking-[0.14em] text-[var(--color-muted)] font-semibold">
-        {role}
-      </div>
-      <div className="mt-2 text-[1.15rem] font-semibold tracking-tight">{name}</div>
-      <div className="mt-4 inline-flex items-center gap-2 text-sm">
-        <span
-          className="w-2 h-2 rounded-full"
-          style={{ background: "var(--color-qr)" }}
-          aria-hidden
-        />
-        <span className="text-[var(--color-ink-3)]">{status}</span>
-      </div>
+      <h3 className="text-[1rem] font-semibold tracking-tight">{title}</h3>
+      <p className="mt-2 text-[var(--color-muted)] text-[0.92rem] leading-relaxed">
+        {body}
+      </p>
     </div>
   );
 }

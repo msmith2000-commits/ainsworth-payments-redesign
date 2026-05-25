@@ -15,6 +15,7 @@ export default function AgentsPage() {
       <SiteNav variant="dark" />
       <Hero />
       <WhatYouGet />
+      <CompliancePreflight />
       <FitCheck />
       <ApplyForm />
       <SiteFooter />
@@ -116,6 +117,172 @@ function WhatYouGet() {
         </div>
       </div>
     </section>
+  );
+}
+
+function CompliancePreflight() {
+  // Anchored at #compliance so the homepage strip can link directly here.
+  // The tool itself lives behind agent auth in the merchant portal; this
+  // section explains what an agent gets, not the rubric content itself.
+  const findings: Array<{
+    code: string;
+    severity: "STOP" | "FLAG" | "REQUIRED";
+    title: string;
+    detail: string;
+  }> = [
+    {
+      code: "A1",
+      severity: "STOP",
+      title: "Bacteriostatic water sold alongside peptides",
+      detail:
+        "Treats the peptide as injectable. FDA hits this consistently. Move BAC water to a separate domain or remove from cart.",
+    },
+    {
+      code: "B3",
+      severity: "FLAG",
+      title: "Disease-state claims on a structure/function product",
+      detail:
+        "DSHEA line. \"Treats arthritis\" needs to become \"supports joint comfort.\" Specific copy edits, rubric-cited.",
+    },
+    {
+      code: "D2",
+      severity: "REQUIRED",
+      title: "Missing structure/function disclaimer",
+      detail:
+        "Baseline expectation. Underwriting catches this fast. One-line fix.",
+    },
+  ];
+
+  return (
+    <section
+      id="compliance"
+      className="section bg-[var(--color-ink)] text-white relative overflow-hidden scroll-mt-24"
+    >
+      <div
+        aria-hidden
+        className="absolute -top-32 -right-20 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(37,99,235,0.18) 0%, transparent 60%)",
+        }}
+      />
+      <div className="wrap relative grid lg:grid-cols-[1.05fr_1fr] gap-14 items-start">
+        <div>
+          <span className="eyebrow eyebrow-on-dark">Compliance pre-flight</span>
+          <h2 className="mt-4 text-[2.1rem] sm:text-[2.5rem] font-semibold tracking-[-0.025em] leading-[1.1] max-w-2xl">
+            Send cleaner deals. Get bigger limits.
+          </h2>
+          <p className="mt-6 text-white/70 text-lg leading-relaxed max-w-xl">
+            High-risk underwriting dies on the merchant&apos;s website, not on
+            the merchant. Disease claims where there should be structure-function
+            claims. Missing disclaimers. Reconstitution kits sold next to the
+            product. Most of it is mechanically fixable. The merchant just
+            doesn&apos;t know.
+          </p>
+          <p className="mt-4 text-white/55 leading-relaxed max-w-xl">
+            Every Ainsworth agent gets a pre-flight tool that screens the
+            merchant&apos;s site against a rubric built from 193 real FDA
+            warning letters. Each finding cites the actual FDA quote and tells
+            you exactly what to change. You ship the application clean. The
+            bank approves faster. Your limits go up.
+          </p>
+
+          <div className="mt-9 grid sm:grid-cols-3 gap-4 max-w-xl">
+            <Stat n="193" label="FDA warning letters" />
+            <Stat n="56" label="rubric-coded issues" />
+            <Stat n="2" label="verticals covered" />
+          </div>
+
+          <div className="mt-9">
+            <p className="text-white/55 text-sm leading-relaxed max-w-xl">
+              Inside the agent portal. Not a public utility. Your IP, in your
+              toolkit, when you sign on as an Ainsworth agent.
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur p-5 sm:p-6">
+          <div className="flex items-center justify-between text-xs text-white/55 mb-4">
+            <span className="mono">/partner/screen · peptide-v1.0</span>
+            <span>3 findings</span>
+          </div>
+          <div className="rounded-xl bg-[rgba(255,255,255,0.02)] border border-white/5 overflow-hidden">
+            {findings.map((f) => (
+              <div
+                key={f.code}
+                className="px-4 py-4 border-b border-white/5 last:border-0"
+              >
+                <div className="flex items-center gap-3 mb-1.5">
+                  <SeverityTag severity={f.severity} />
+                  <span className="mono">{f.code}</span>
+                </div>
+                <div className="text-[0.98rem] font-medium text-white leading-snug">
+                  {f.title}
+                </div>
+                <div className="text-[0.85rem] text-white/55 mt-1.5 leading-relaxed">
+                  {f.detail}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 text-[0.72rem] text-white/40">
+            Sample output. Real findings cite the FDA letter by name.
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SeverityTag({
+  severity,
+}: {
+  severity: "STOP" | "FLAG" | "REQUIRED";
+}) {
+  // Each tag has both a color AND a label so it survives grayscale or
+  // colorblind viewing. Mark is red-green colorblind; rubric output is
+  // designed with this constraint.
+  const styles: Record<
+    "STOP" | "FLAG" | "REQUIRED",
+    { bg: string; fg: string; border: string }
+  > = {
+    STOP: {
+      bg: "rgba(220,38,38,0.12)",
+      fg: "#fca5a5",
+      border: "rgba(220,38,38,0.35)",
+    },
+    FLAG: {
+      bg: "rgba(245,158,11,0.12)",
+      fg: "#fbbf24",
+      border: "rgba(245,158,11,0.35)",
+    },
+    REQUIRED: {
+      bg: "rgba(37,99,235,0.12)",
+      fg: "#93c5fd",
+      border: "rgba(37,99,235,0.35)",
+    },
+  };
+  const s = styles[severity];
+  return (
+    <span
+      className="inline-flex items-center text-[0.65rem] font-bold tracking-[0.08em] px-2 py-0.5 rounded-md border"
+      style={{ background: s.bg, color: s.fg, borderColor: s.border }}
+    >
+      {severity}
+    </span>
+  );
+}
+
+function Stat({ n, label }: { n: string; label: string }) {
+  return (
+    <div>
+      <div className="text-[1.6rem] font-semibold tracking-tight text-white tabular-nums">
+        {n}
+      </div>
+      <div className="text-[0.7rem] uppercase tracking-[0.12em] text-white/45 mt-1 leading-tight">
+        {label}
+      </div>
+    </div>
   );
 }
 

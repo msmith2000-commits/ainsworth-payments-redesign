@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Brand palette. Navy + electric blue + a single QR accent green. */
+  --color-ink: #0a0e1a;
+  --color-ink-2: #111827;
+  --color-ink-3: #1f2937;
+
+  --color-paper: #ffffff;
+  --color-paper-2: #f8fafc;
+  --color-paper-3: #f1f5f9;
+
+  --color-line: #e5e7eb;
+  --color-line-2: #d1d5db;
+
+  --color-muted: #6b7280;
+  --color-muted-2: #9ca3af;
+
+  --color-navy: #0f1e3d;
+  --color-navy-2: #142b59;
+
+  --color-accent: #2563eb;
+  --color-accent-2: #3b82f6;
+  --color-accent-3: #1d4ed8;
+
+  --color-qr: #2BC000;
+  --color-qr-2: #25a500;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection { background: var(--color-accent); color: white; }
+
+/* Hairline rules */
+.hairline { border-top: 1px solid var(--color-line); }
+
+/* Container */
+.wrap { max-width: 72rem; margin-inline: auto; padding-inline: 1.5rem; }
+@media (min-width: 768px) { .wrap { padding-inline: 2rem; } }
+
+/* Section spacing */
+.section { padding-block: 5rem; }
+@media (min-width: 768px) { .section { padding-block: 7rem; } }
+
+/* Eyebrow label */
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: var(--color-accent);
+  display: inline-block;
+}
+.eyebrow-on-dark { color: #93c5fd; }
+.eyebrow-on-dark::before { background: #93c5fd; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--color-accent);
+  color: white;
+}
+.btn-primary:hover { background: var(--color-accent-3); transform: translateY(-1px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-line-2);
+}
+.btn-ghost:hover { border-color: var(--color-ink); }
+
+.btn-ghost-dark {
+  background: transparent;
+  color: white;
+  border-color: rgba(255,255,255,0.2);
+}
+.btn-ghost-dark:hover { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.05); }
+
+/* Card */
+.card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  padding: 1.75rem;
+}
+
+/* Mono spec text used to show the "builder" voice */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: -0.005em;
+  color: var(--color-muted);
+}

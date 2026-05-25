@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env*.local
+.DS_Store
+*.log
+.vercel
+next-env.d.ts
+*\ 2.tsx
+*\ 2.ts
+*\ 2.css
+*\ 2.html
+
+# Brand assets are large binary files; tracked outside the site repo
+QuickRefund_Logo_System*/

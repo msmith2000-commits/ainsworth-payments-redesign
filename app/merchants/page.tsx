@@ -82,7 +82,9 @@ function Pillars() {
             n="01"
             kicker="Access"
             title="We approve where others decline."
-            body="Multiple sponsor banks in our network, each with different appetites. Decades of underwriting relationships. When other ISOs send the same application to one bank and call it a day, we route it to the bank most likely to say yes. If you&apos;ve been declined elsewhere, that&apos;s often a routing problem, not a fitness problem."
+            body="Multiple sponsor banks in our network, each with different appetites. Decades of underwriting relationships. When other ISOs send the same application to one bank and call it a day, we route it to the bank most likely to say yes. If you&apos;ve been declined elsewhere, that&apos;s often a routing problem, not a fitness problem. And when it is a fitness problem, our compliance pre-flight tool gives your site a health check against the actual issues banks flag, so you can fix them before underwriting ever sees the application."
+            ctaHref="#compliance"
+            ctaLabel="See the compliance pre-flight"
           />
           <Pillar
             n="02"
@@ -109,12 +111,16 @@ function Pillar({
   title,
   body,
   highlight,
+  ctaHref,
+  ctaLabel,
 }: {
   n: string;
   kicker: string;
   title: string;
   body: string;
   highlight?: boolean;
+  ctaHref?: string;
+  ctaLabel?: string;
 }) {
   return (
     <div
@@ -142,6 +148,15 @@ function Pillar({
       <p className="text-[var(--color-muted)] text-[0.95rem] leading-relaxed">
         {body}
       </p>
+      {ctaHref && ctaLabel ? (
+        <a
+          href={ctaHref}
+          className="mt-auto inline-flex items-center gap-1.5 text-[0.85rem] font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-3)] transition-colors"
+        >
+          {ctaLabel}
+          <span aria-hidden>↓</span>
+        </a>
+      ) : null}
     </div>
   );
 }

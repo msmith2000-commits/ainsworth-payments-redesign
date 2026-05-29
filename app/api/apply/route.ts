@@ -8,7 +8,10 @@ import { Resend } from "resend";
  *
  * Routing:
  *   form_type=agent    → mark@ainsworthpayments.com
- *   form_type=merchant → info@ainsworthpayments.com
+ *   form_type=merchant → mark@ainsworthpayments.com
+ *   (Both go to mark@ for now — info@ isn't a confirmed-working mailbox yet.
+ *   Subjects differ so the two are distinguishable in the inbox. Switch the
+ *   merchant TO back to info@ once it's set up as a real Workspace alias/group.)
  *
  * Env required before going live:
  *   RESEND_API_KEY      — the Resend key (the portal's key works if its
@@ -31,9 +34,9 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const isAgent = String(form.get("form_type") ?? "agent") !== "merchant";
-  const to = isAgent
-    ? "mark@ainsworthpayments.com"
-    : "info@ainsworthpayments.com";
+  // Both route to mark@ for now — info@ is not a confirmed-working mailbox.
+  // The subject line (below) distinguishes agent vs merchant in the inbox.
+  const to = "mark@ainsworthpayments.com";
   const subject = isAgent
     ? "New Ainsworth agent application"
     : "New direct merchant application";

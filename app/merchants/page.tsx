@@ -452,32 +452,20 @@ function ApplyForm() {
           </div>
         </div>
 
-        <form
-          action="https://formsubmit.co/info@ainsworthpayments.com"
-          method="POST"
-          className="card"
-        >
-          <input
-            type="hidden"
-            name="_subject"
-            value="New direct merchant application"
-          />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="true" />
-          <input
-            type="hidden"
-            name="_next"
-            value="https://ainsworthpayments.com/merchants?submitted=true"
-          />
+        <form action="/api/apply" method="POST" className="card">
+          <input type="hidden" name="form_type" value="merchant" />
+          {/* Source tagging — used by back-office triage to separate direct
+              inquiries from agent-routed leads. Surfaces in the email body. */}
+          <input type="hidden" name="lead_source" value="direct" />
+          {/* Honeypot — hidden from real users; bots fill it and get dropped. */}
           <input
             type="text"
-            name="_honey"
+            name="company_hp"
+            tabIndex={-1}
+            autoComplete="off"
             style={{ display: "none" }}
             aria-hidden
           />
-          {/* Source tagging — used by back-office triage to separate direct
-              inquiries from agent-routed leads. */}
-          <input type="hidden" name="lead_source" value="direct" />
 
           <h3 className="text-[1.15rem] font-semibold tracking-tight">
             Direct merchant application

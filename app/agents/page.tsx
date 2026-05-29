@@ -359,8 +359,8 @@ function Cross({ children }: { children: React.ReactNode }) {
 }
 
 function ApplyForm() {
-  // Form posts to formsubmit.co for v1. We can swap to a route handler that
-  // uses Resend later without changing the markup.
+  // Native form POST to /api/apply (Resend-backed). No client JS needed —
+  // the route 303-redirects to /thank-you. form_type routes the email.
   return (
     <section id="apply" className="section bg-white">
       <div className="wrap grid md:grid-cols-[1fr_1.1fr] gap-14 items-start">
@@ -391,20 +391,17 @@ function ApplyForm() {
           </div>
         </div>
 
-        <form
-          action="https://formsubmit.co/mark@ainsworthpayments.com"
-          method="POST"
-          className="card"
-        >
-          <input type="hidden" name="_subject" value="New Ainsworth agent application" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="true" />
+        <form action="/api/apply" method="POST" className="card">
+          <input type="hidden" name="form_type" value="agent" />
+          {/* Honeypot — hidden from real users; bots fill it and get dropped. */}
           <input
-            type="hidden"
-            name="_next"
-            value="https://ainsworthpayments.com/agents?submitted=true"
+            type="text"
+            name="company_hp"
+            tabIndex={-1}
+            autoComplete="off"
+            style={{ display: "none" }}
+            aria-hidden
           />
-          <input type="text" name="_honey" style={{ display: "none" }} aria-hidden />
 
           <h3 className="text-[1.15rem] font-semibold tracking-tight">
             Agent application

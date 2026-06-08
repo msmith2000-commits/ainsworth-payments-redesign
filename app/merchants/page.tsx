@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 export const metadata: Metadata = {
   title: "For merchants — Ainsworth Payments",
   description:
-    "Declined elsewhere? We place merchants in nutra, peptides, telehealth, and the categories most ISOs walk away from. Apply directly.",
+    "Declined elsewhere? We place merchants in nutra, telehealth, subscription billing, and the categories most ISOs walk away from. Apply directly.",
 };
 
 export default function MerchantsPage() {
@@ -43,12 +43,12 @@ function Hero() {
           </span>
         </h1>
         <p className="mt-7 text-lg text-white/70 leading-relaxed max-w-2xl">
-          We work in the categories most ISOs walk away from. Nutra. Peptides.
-          Telehealth. Digital goods. The verticals card networks call
-          &quot;high-risk&quot; and your last processor called &quot;not a
-          fit.&quot; If your business is real, you have revenue, and your
-          website can survive underwriting, we can usually find a bank that
-          says yes.
+          We work in the categories most ISOs walk away from. Nutra.
+          Telehealth. Subscription billing. Digital goods. The verticals card
+          networks call &quot;high-risk&quot; and your last processor called
+          &quot;not a fit.&quot; If your business is real, you have revenue,
+          and your website can survive underwriting, we can usually find a
+          bank that says yes.
         </p>
         <div className="mt-9 flex flex-wrap gap-3">
           <a href="#apply" className="btn btn-primary">
@@ -175,9 +175,9 @@ function CompliancePreflight() {
     {
       code: "A1",
       severity: "STOP",
-      title: "Bacteriostatic water sold alongside peptides",
+      title: "Free trial converting to auto-billing without clear disclosure",
       detail:
-        "Treats the peptide as injectable. FDA flags this consistently. Move to a separate domain or remove from the cart.",
+        "FTC's negative-option rule penalizes hidden recurring charges. Card networks reject this at underwriting. Put recurring terms above the order button.",
     },
     {
       code: "B3",
@@ -278,7 +278,7 @@ function CompliancePreflight() {
 
         <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur p-5 sm:p-6">
           <div className="flex items-center justify-between text-xs text-white/55 mb-4">
-            <span className="mono">/dashboard/screen · peptide-v1.0</span>
+            <span className="mono">/dashboard/screen · nutra-v1.0</span>
             <span>3 findings</span>
           </div>
           <div className="rounded-xl bg-[rgba(255,255,255,0.02)] border border-white/5 overflow-hidden">
@@ -508,7 +508,6 @@ function ApplyForm() {
             name="vertical"
             options={[
               "Nutraceuticals / Supplements",
-              "Peptides",
               "Telehealth",
               "CBD / Hemp",
               "Subscription / Recurring",

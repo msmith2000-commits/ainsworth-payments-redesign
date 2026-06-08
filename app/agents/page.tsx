@@ -133,9 +133,9 @@ function CompliancePreflight() {
     {
       code: "A1",
       severity: "STOP",
-      title: "Bacteriostatic water sold alongside peptides",
+      title: "Free trial converting to auto-billing without clear disclosure",
       detail:
-        "Treats the peptide as injectable. FDA hits this consistently. Move BAC water to a separate domain or remove from cart.",
+        "FTC's negative-option rule penalizes hidden recurring charges. Card networks reject this at underwriting. Put recurring terms above the order button.",
     },
     {
       code: "B3",
@@ -208,7 +208,7 @@ function CompliancePreflight() {
 
         <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur p-5 sm:p-6">
           <div className="flex items-center justify-between text-xs text-white/55 mb-4">
-            <span className="mono">/partner/screen · peptide-v1.0</span>
+            <span className="mono">/partner/screen · nutra-v1.0</span>
             <span>3 findings</span>
           </div>
           <div className="rounded-xl bg-[rgba(255,255,255,0.02)] border border-white/5 overflow-hidden">

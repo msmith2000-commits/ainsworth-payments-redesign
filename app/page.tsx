@@ -103,7 +103,7 @@ function DashboardMock() {
     tone: "blue" | "qr" | "muted";
   }> = [
     {
-      name: "Iron Peak Peptides",
+      name: "Cascade Supplements",
       vertical: "Nutra",
       stage: "Docs",
       next: "Awaiting bank statement",
@@ -568,7 +568,7 @@ function Network() {
         <div className="mt-12 grid sm:grid-cols-3 gap-4">
           <NetworkPoint
             title="High-risk verticals"
-            body="Nutra, peptides, telehealth, digital goods, subscription. The categories most ISOs run from."
+            body="Nutra, telehealth, digital goods, subscription billing. The categories most ISOs run from."
           />
           <NetworkPoint
             title="Routing by appetite"

@@ -38,7 +38,6 @@ export function SiteFooter() {
         </FooterCol>
         <FooterCol title="Verticals">
           <span className="text-white/80">Nutraceuticals</span>
-          <span className="text-white/80">Peptides</span>
           <span className="text-white/80">Telehealth</span>
           <span className="text-white/80">Digital goods</span>
           <span className="text-white/40">High-risk specialists</span>

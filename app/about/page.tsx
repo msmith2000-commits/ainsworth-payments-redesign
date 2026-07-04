@@ -36,7 +36,7 @@ function Hero() {
         </h1>
         <p className="mt-7 text-lg text-white/70 leading-relaxed max-w-2xl">
           Ainsworth is a small team. Two principals, a focused engineering bench,
-          three sponsor banks, and one sister platform that lets us underwrite
+          many sponsor banks, and one sister platform that lets us underwrite
           differently than every other ISO in our tier.
         </p>
       </div>
@@ -65,7 +65,7 @@ function Story() {
             We started Ainsworth because we had spent enough years inside the
             paper-and-PDF era of merchant services to know it could be a real
             product. Agents are technical enough to use software. Merchants are
-            ready to fill out one form, not three. Sponsor banks are ready to
+            ready to fill out one form, not one per bank. Sponsor banks are ready to
             underwrite faster when the application arrives clean.
           </p>
           <p>

@@ -12,6 +12,7 @@ export default function HomePage() {
       <Pillars />
       <CompliancePreflightStrip />
       <HowItWorks />
+      <PartnerApiTeaser />
       <Flywheel />
       <Network />
       <ClosingCTA />
@@ -428,6 +429,39 @@ function HowItWorks() {
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────── PARTNER API TEASER ─────────────────────── */
+
+function PartnerApiTeaser() {
+  return (
+    <section className="section bg-[var(--color-ink)] text-white">
+      <div className="wrap">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div className="max-w-2xl">
+            <span className="eyebrow eyebrow-on-dark">Partner Intake API</span>
+            <h2 className="mt-4 text-[1.9rem] sm:text-[2.3rem] font-semibold tracking-[-0.025em] leading-[1.12]">
+              Already collect merchant data in your own system?
+              <span className="block text-white/55 font-normal">
+                Push applications to us in one call.
+              </span>
+            </h2>
+            <p className="mt-6 text-white/70 leading-relaxed">
+              ISOs, agents, and technology partners can create merchants and
+              track their pipeline programmatically — no re-keying. REST and
+              JSON, per-partner isolation, sensitive fields encrypted at rest.
+              Available now for approved partners.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Link href="/agents#api" className="btn btn-primary">
+              Explore the Partner API
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

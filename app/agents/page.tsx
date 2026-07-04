@@ -15,11 +15,112 @@ export default function AgentsPage() {
       <SiteNav variant="dark" />
       <Hero />
       <WhatYouGet />
+      <PartnerApi />
       <CompliancePreflight />
       <FitCheck />
       <ApplyForm />
       <SiteFooter />
     </>
+  );
+}
+
+function PartnerApi() {
+  const functions = [
+    {
+      tag: "Live",
+      title: "Create merchants in one call",
+      body: "Submit a merchant and primary contact from your own system. The merchant lands in your book exactly like a portal invite and gets their own portal login automatically. No re-keying.",
+    },
+    {
+      tag: "Live",
+      title: "Track your pipeline programmatically",
+      body: "List your merchants and read per-merchant application status via the API. Automate on it — know the moment a file is submission-ready instead of asking.",
+    },
+    {
+      tag: "Live",
+      title: "Keys you control",
+      body: "API keys are issued per partner organization and revocable instantly. Per-partner data isolation. Every action is audit-logged.",
+    },
+    {
+      tag: "Rolling out",
+      title: "The full application, covered",
+      body: "The published spec covers the complete high-risk application — business identity, processing history, billing models, e-commerce, fulfillment, beneficial owners, banking, and disclosures — plus document upload and an automated status feed that flags document issues before they slow a file down.",
+    },
+  ];
+  const trust = [
+    {
+      title: "Built for high-risk",
+      body: "The application model covers what high-risk underwriting actually asks for — beneficial ownership, processing history, billing models, fulfillment — not a generic lead form.",
+    },
+    {
+      title: "The merchant stays in control",
+      body: "Merchants personally e-sign through a hosted signature link and get their own portal access. You pre-fill the application. You never sign for them.",
+    },
+    {
+      title: "Serious about the data",
+      body: "REST and JSON, API-key authentication, rate-limited, fully audit-logged. Sensitive fields — SSN, EIN, banking — are encrypted at rest with AES-256-GCM and write-only through the API.",
+    },
+  ];
+  return (
+    <section
+      id="api"
+      className="section bg-[var(--color-paper-2)] border-y border-[var(--color-line)] scroll-mt-24"
+    >
+      <div className="wrap">
+        <span className="eyebrow">Partner Intake API</span>
+        <h2 className="mt-4 text-[2.1rem] sm:text-[2.5rem] font-semibold tracking-[-0.025em] leading-[1.1] max-w-3xl">
+          Your CRM already has the merchant&apos;s data.
+          <span className="block text-[var(--color-muted)] font-normal">
+            Send it to us in one call.
+          </span>
+        </h2>
+        <p className="mt-6 text-lg text-[var(--color-muted)] leading-relaxed max-w-2xl">
+          ISOs, agents, and technology partners who already collect merchant
+          information in their own systems can push applications to Ainsworth
+          programmatically — instead of re-typing every deal. One call creates
+          the merchant; we handle document review, underwriting preparation,
+          bank placement, and e-signature, with application status visible to
+          you the whole way.
+        </p>
+
+        <div className="mt-12 grid md:grid-cols-2 gap-5">
+          {functions.map((f) => (
+            <div key={f.title} className="card bg-white">
+              <div className="mono mb-3">{f.tag}</div>
+              <h3 className="text-[1.15rem] font-semibold tracking-tight leading-snug">
+                {f.title}
+              </h3>
+              <p className="mt-3 text-[var(--color-muted)] leading-relaxed text-[0.97rem]">
+                {f.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 grid sm:grid-cols-3 gap-5">
+          {trust.map((t) => (
+            <div key={t.title}>
+              <h3 className="text-[1.02rem] font-semibold tracking-tight">
+                {t.title}
+              </h3>
+              <p className="mt-2 text-[var(--color-muted)] leading-relaxed text-[0.92rem]">
+                {t.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a href="#apply" className="btn btn-primary">
+            Talk to us about API access
+          </a>
+          <p className="text-[0.92rem] text-[var(--color-muted)]">
+            Available now for approved partners. Full specification and field
+            reference shared directly after onboarding.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -43,7 +144,7 @@ function Hero() {
           </span>
         </h1>
         <p className="mt-7 text-lg text-white/70 leading-relaxed max-w-2xl">
-          Ainsworth is the ISO built for independent sales agents. Three sponsor
+          Ainsworth is the ISO built for independent sales agents. Many sponsor
           banks live, one canonical application across the network, a real
           dashboard that names the next action on every deal. You bring the
           relationships. We handle everything around the application.

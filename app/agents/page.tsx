@@ -534,6 +534,7 @@ function ApplyForm() {
               "10 to 25",
               "More than 25",
             ]}
+            optional
           />
 
           <Select
@@ -548,6 +549,7 @@ function ApplyForm() {
               "Other ISO",
               "Direct to acquirer",
             ]}
+            optional
           />
 
           <Field
@@ -626,10 +628,12 @@ function Select({
   label,
   name,
   options,
+  optional,
 }: {
   label: string;
   name: string;
   options: string[];
+  optional?: boolean;
 }) {
   return (
     <div className="mt-4">
@@ -637,12 +641,17 @@ function Select({
         htmlFor={name}
         className="block text-[0.72rem] font-semibold tracking-[0.06em] uppercase text-[var(--color-muted)] mb-1.5"
       >
-        {label}
+        {label}{" "}
+        {optional ? (
+          <span className="text-[var(--color-muted-2)] font-normal normal-case tracking-normal">
+            (optional)
+          </span>
+        ) : null}
       </label>
       <select
         id={name}
         name={name}
-        required
+        required={!optional}
         defaultValue=""
         className="w-full rounded-md border border-[var(--color-line)] px-3.5 py-2.5 text-[0.95rem] focus:border-[var(--color-accent)] focus:outline-none transition-colors bg-white"
       >
